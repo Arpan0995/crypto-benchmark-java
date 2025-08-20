@@ -1,0 +1,4 @@
+algorithm,keyGenTimeMs,encryptOrSignTimeMs,decryptOrVerifyTimeMs,keySizeBits,publicKeyBytes,privateKeyBytes,symmetricKeyBytes,signatureBytes
+AES,1.994,0.693,0.514,256,0,0,32,0
+RSA,129.154,0.535,3.199,2048,294,1218,0,0
+SPHINCS+,11.661,211.542,11.638,128,58,132,0,17088
