@@ -144,7 +144,9 @@ benchmark.  Each bar represents the average value for an algorithm.
 
 ![Operation time comparison](benchmark_results_time.png)
 
-![Key and signature size comparison](benchmark_results_size.png)
+![Key size comparison](benchmark_results_key_sizes.png)
+
+![Signature size comparison](benchmark_results_signature_size.png)
 
 
 
