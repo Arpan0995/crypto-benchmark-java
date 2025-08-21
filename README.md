@@ -30,7 +30,8 @@ cryptographic operations of three algorithms:
 ## Methodology
 
 The benchmarks were conducted using the `BenchmarkRunner` class in
-`BenchmarkRunner.java`.  The program registers the Bouncy Castle
+`
+BenchmarkRunner.java`.  The program registers the Bouncy Castle
 provider (included on this system) to access post‑quantum algorithms.
 For each algorithm the following steps are measured:
 
@@ -62,7 +63,8 @@ signature length for SPHINCS+.
 
 The table below summarises the averaged timings and sizes captured
 from the benchmark.  Times are reported in milliseconds and sizes in
-bytes (except the symmetric key size, which is reported in bytes as
+b
+ytes (except the symmetric key size, which is reported in bytes as
 well).  For AES the key size column reflects the symmetric key length
 (32 bytes for AES‑256); for RSA and SPHINCS+ it represents the
 security level in bits (2048 and 128 respectively).
@@ -150,6 +152,8 @@ benchmark.  Each bar represents the average value for an algorithm.
 
 
 
+
+
 ## Building and Running the Benchmark
 
 Although the benchmark can be executed in this repository via
@@ -165,5 +169,14 @@ Python script:
 python3 plot_results.py benchmark_results.csv
 ```
 
+
 This will update `benchmark_results_time.png` and
 `benchmark_results_size.png` with the new measurements.
+
+### Discussion of Graphs
+
+The **operation time comparison** chart shows that AES is by far the fastest for key generation, encryption and decryption, finishing in well under a millisecond. RSA is slower, particularly for decryption, but remains within a few milliseconds. In contrast, SPHINCS+ signing takes more than **200 ms** on average in this environment, and verification is an order of magnitude slower than AES and RSA. This highlights that the post‑quantum scheme is much more computationally intensive.
+
+The **key size comparison** graph demonstrates that AES uses a small symmetric key (32 bytes for AES‑26) while RSA keys are larger (a 2048‑bit modulus produces a 256‑byte key) and SPHINCS+ keys consist of a 128‑bit security level parameter resulting in very small public keys (~58 bytes) but moderate private keys (~132 bytes). The **signature size comparison** graph emphasises that SPHINCS+ signatures are huge (17 kB for the fast parameter set), whereas RSA signatures are only a few hundred bytes and AES does not generate signatures.
+
+Because SPHINCS+ uses hash‑based signatures rather than block ciphers or modular arithmetic, it requires millions of hash function calls to produce a single signature【269012138182202†L524-L529】, leading to the slow timings observed. Applications must handle these long signing times and very large signatures, which may not fit into existing protocols or message formats. Bandwidth and storage requirements also increase dramatically. Therefore, while SPHINCS+ provides resistance against quantum attacks, integrating it into real‑world systems is more challenging than using well‑established algorithms like RSA and AES, which have smaller keys/signatures and much faster cryptographic operations.
